@@ -431,13 +431,9 @@
     <h1>សិក្ខាសាលា ពុទ្ធិកសាកលវិទ្យាល័យព្រះសីហនុរាជ</h1>
     <h2>១១ ប្រធានបទ (11 Topics)</h2>
     <h2>Buddhism, Peace, and Society in Cambodia</h2>
-    <div class="date-badge">📅 ថ្ងៃទី ២០ មិថុនា ២០២៦ | June 20, 2026
-          <div class="">
-      <a href="5.html">More</a>
-    </div>
-    </div>
-
+    <div class="date-badge">📅 ថ្ងៃទី ២០ មិថុនា ២០២៦ | June 20, 2026</div>
   </div>
+</div>
 
   <!-- THEME I -->
   <div class="theme-section">
@@ -683,7 +679,94 @@
 
   <div class="footer-note">
     🌟 គម្រោងស្រាវជ្រាវពុទ្ធសាសនា សង្គម និងសន្តិភាព នៅកម្ពុជា ពសស-GIZ 🌟
+    <div>
+      <a href="index.html">Detailed Format</a> ||
+      <a href="index2.html">Other Format 2</a>
+    </div>
   </div>
 </div>
+
+<!-- ====== SCROLL TO TOP BUTTON ====== -->
+<style>
+  /* Scroll to Top button style */
+  #scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    transition: all 0.3s ease;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #scrollTopBtn:hover {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 28px rgba(59, 130, 246, 0.5);
+  }
+
+  #scrollTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  #scrollTopBtn .arrow-up {
+    display: inline-block;
+    line-height: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 550px) {
+    #scrollTopBtn {
+      width: 48px;
+      height: 48px;
+      font-size: 1.5rem;
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+</style>
+
+<button id="scrollTopBtn" title="Scroll to top">
+  <span class="arrow-up">↑</span>
+</button>
+
+<script>
+  // Get the button
+  const scrollBtn = document.getElementById('scrollTopBtn');
+
+  // Show/hide button based on scroll position
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) {
+      scrollBtn.classList.add('show');
+    } else {
+      scrollBtn.classList.remove('show');
+    }
+  });
+
+  // Scroll to top smoothly when clicked
+  scrollBtn.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
+<!-- ====== END SCROLL TO TOP ====== -->
 </body>
 </html>
