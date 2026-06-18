@@ -959,5 +959,196 @@
   });
 </script>
 <!-- ====== END SCROLL TO TOP ====== -->
+
+<!-- ====== DOWNLOAD IMAGE BUTTON FOR EACH TOPIC ====== -->
+<style>
+  /* Style for download button inside each topic card */
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.8);
+    border: 1px solid #93c5fd;
+    padding: 0.3rem 0.9rem;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1e40af;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Khmer OS Siemreap', 'Khmer OS', 'Khmer', 'Inter', sans-serif;
+    margin-top: 0.8rem;
+  }
+
+  .download-btn:hover {
+    background: #dbeafe;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  }
+
+  .download-btn .icon {
+    font-size: 1rem;
+  }
+
+  /* Hide download button when printing or capturing */
+  .download-btn.capturing {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Make sure card looks good when captured */
+  .topic-card.downloading {
+    transform: none !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+  }
+</style>
+
+<!-- ====== HTML2CANVAS LIBRARY ====== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+</script>
+
+<script>
+  // ============================================================
+  // DOWNLOAD TOPIC CARD AS IMAGE (PNG)
+  // ============================================================
+  function downloadTopicAsImage(button) {
+    // Get the parent topic-card
+    const card = button.closest('.topic-card');
+    if (!card) return;
+
+    // Get the topic number for filename
+    const topicNumber = card.querySelector('.topic-number')?.textContent?.trim() || 'topic';
+    const authorName = card.querySelector('.author-khmer')?.textContent?.trim() || 'speaker';
+    const filename = `${topicNumber}_${authorName}.png`;
+
+    // Temporarily hide the download button and toggle buttons during capture
+    const allDownloadBtns = card.querySelectorAll('.download-btn');
+    const allToggleBtns = card.querySelectorAll('.toggle-btn');
+    const allToggleContents = card.querySelectorAll('.toggle-content');
+
+    // Store original styles
+    const originalOverflow = card.style.overflow;
+    const originalTransform = card.style.transform;
+    const originalBoxShadow = card.style.boxShadow;
+
+    // Make sure all toggle content is OPEN for capture
+    const toggleContents = card.querySelectorAll('.toggle-content');
+    const toggleIcons = card.querySelectorAll('.toggle-icon');
+    const toggleBtns = card.querySelectorAll('.toggle-btn');
+
+    // Store which ones were open
+    const wasOpen = [];
+    toggleContents.forEach((content, index) => {
+      wasOpen[index] = content.classList.contains('open');
+      if (!wasOpen[index]) {
+        content.classList.add('open');
+        if (toggleIcons[index]) {
+          toggleIcons[index].textContent = '−';
+          toggleIcons[index].className = 'toggle-icon minus';
+        }
+      }
+    });
+
+    // Hide download buttons
+    allDownloadBtns.forEach(btn => btn.classList.add('capturing'));
+
+    // Add downloading class for better appearance
+    card.classList.add('downloading');
+    card.style.overflow = 'visible';
+    card.style.transform = 'none';
+    card.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
+
+    // Small delay to let DOM update
+    setTimeout(() => {
+      html2canvas(card, {
+        scale: 2, // Higher quality
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: getComputedStyle(card).backgroundColor || '#ffffff',
+        logging: false,
+        width: card.scrollWidth,
+        height: card.scrollHeight,
+        windowWidth: card.scrollWidth,
+        windowHeight: card.scrollHeight,
+        onclone: function(clonedDoc) {
+          // Ensure all content is visible in clone
+          const clonedCard = clonedDoc.querySelector('.topic-card');
+          if (clonedCard) {
+            clonedCard.style.transform = 'none';
+            clonedCard.style.overflow = 'visible';
+          }
+        }
+      }).then((canvas) => {
+        // Create download link
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        // Restore everything
+        restoreCard();
+      }).catch((error) => {
+        console.error('Error capturing image:', error);
+        restoreCard();
+        alert('មានបញ្ហាក្នុងការទាញយករូបភាព។ សូមព្យាយាមម្តងទៀត។');
+      });
+    }, 300);
+
+    function restoreCard() {
+      // Restore toggle states
+      toggleContents.forEach((content, index) => {
+        if (!wasOpen[index]) {
+          content.classList.remove('open');
+          if (toggleIcons[index]) {
+            toggleIcons[index].textContent = '+';
+            toggleIcons[index].className = 'toggle-icon plus';
+          }
+        }
+      });
+
+      // Show download buttons again
+      allDownloadBtns.forEach(btn => btn.classList.remove('capturing'));
+
+      // Remove downloading class
+      card.classList.remove('downloading');
+      card.style.overflow = originalOverflow || '';
+      card.style.transform = originalTransform || '';
+      card.style.boxShadow = originalBoxShadow || '';
+    }
+  }
+
+  // ============================================================
+  // ADD DOWNLOAD BUTTONS TO ALL TOPIC CARDS
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.topic-card');
+
+    cards.forEach((card, index) => {
+      // Find the content-col
+      const contentCol = card.querySelector('.content-col');
+      if (!contentCol) return;
+
+      // Check if download button already exists
+      if (contentCol.querySelector('.download-btn')) return;
+
+      // Create download button
+      const downloadBtn = document.createElement('button');
+      downloadBtn.className = 'download-btn';
+      downloadBtn.innerHTML = `
+        <span class="icon">⬇️</span>
+        ទាញយករូបភាព / Download Image
+      `;
+      downloadBtn.title = 'Download this topic as image (PNG)';
+      downloadBtn.onclick = function(e) {
+        e.stopPropagation();
+        downloadTopicAsImage(this);
+      };
+
+      // Append to content-col
+      contentCol.appendChild(downloadBtn);
+    });
+  });
+</script>
+<!-- ====== END DOWNLOAD IMAGE BUTTON ====== -->
 </body>
 </html>
