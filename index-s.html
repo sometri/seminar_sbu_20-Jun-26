@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>សិក្ខាសាលា | ១១ ប្រធានបទ - ពុទ្ធសាសនា និងសន្តិភាព</title>
+  <!-- Google Fonts: Inter for Latin fallback + Khmer OS fonts via local/system preferred -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f0f4f8 0%, #e2e8f0 100%);
+      /* Khmer OS Siemreap for all body text, fallback to Khmer OS, Inter for Latin */
+      font-family: 'Khmer OS Siemreap', 'Khmer OS', 'Khmer', 'Inter', system-ui, -apple-system, sans-serif;
+      padding: 2rem 1.5rem;
+      color: #1e293b;
+    }
+
+    /* Khmer OS Muol Light for all headings */
+    h1, h2, h3, .theme-title, .author-khmer, .photo-name, .title-khmer, .chair, .date-badge, .footer-note, .topic-number, .lang-label, .conf-header h1, .conf-header h2 {
+      font-family: 'Khmer OS Muol Light', 'Khmer OS Muol', 'Khmer', 'Inter', system-ui, sans-serif;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* header with blue theme */
+    .conf-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 3px solid #3b82f6;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+    }
+
+    .conf-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      letter-spacing: 1px;
+    }
+
+    .conf-header h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #e0f2fe;
+      margin-top: 0.3rem;
+    }
+
+    .date-badge {
+      display: inline-block;
+      background: #f8fafc;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1e40af;
+      margin-top: 0.8rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* theme section with blue styling */
+    .theme-section {
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-radius: 1.5rem;
+      padding: 0.8rem 1.8rem;
+      border-left: 8px solid #2563eb;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+    }
+
+    .theme-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .theme-title-en {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #3b82f6;
+      font-family: 'Khmer OS Siemreap', 'Inter', sans-serif;
+    }
+
+    .chair {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: #475569;
+      font-style: italic;
+    }
+
+    /* topic card - base style with soft shadows */
+    .topic-card {
+      border-radius: 2rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+      overflow: hidden;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 35px -16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ---------- BEAUTIFUL PASTEL COLOR VARIATIONS ---------- */
+    /* Lavender dream */
+    .topic-card.lavender {
+      background: linear-gradient(135deg, #f5f0ff 0%, #ede4ff 100%);
+      border: 1px solid #ddd0f0;
+    }
+    .topic-card.lavender .title-khmer { background: #f0eaff; border-left-color: #a78bfa; color: #5b21b6; }
+    .topic-card.lavender .title-english { background: #f7f3ff; color: #6d28d9; }
+    .topic-card.lavender .author-khmer { background: #f0eaff; color: #7c3aed; }
+    .topic-card.lavender .topic-number { background: #a78bfa; color: white; }
+    .topic-card.lavender .photo-col, .topic-card.lavender .photo-col-dual { background: #ede4ff; }
+    .topic-card.lavender .photo-name { color: #6d28d9; }
+
+    /* Rose petal */
+    .topic-card.rose {
+      background: linear-gradient(135deg, #fff5f7 0%, #ffe4ed 100%);
+      border: 1px solid #fbcfe8;
+    }
+    .topic-card.rose .title-khmer { background: #fff0f5; border-left-color: #f472b6; color: #9d174d; }
+    .topic-card.rose .title-english { background: #fff5f7; color: #be185d; }
+    .topic-card.rose .author-khmer { background: #ffe4ed; color: #db2777; }
+    .topic-card.rose .topic-number { background: #f472b6; color: white; }
+    .topic-card.rose .photo-col, .topic-card.rose .photo-col-dual { background: #ffe4ed; }
+    .topic-card.rose .photo-name { color: #be185d; }
+
+    /* Sky blue */
+    .topic-card.sky {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 1px solid #bae6fd;
+    }
+    .topic-card.sky .title-khmer { background: #e0f2fe; border-left-color: #38bdf8; color: #1e3a8a; }
+    .topic-card.sky .title-english { background: #f0f9ff; color: #0369a1; }
+    .topic-card.sky .author-khmer { background: #e0f2fe; color: #0284c7; }
+    .topic-card.sky .topic-number { background: #38bdf8; color: white; }
+    .topic-card.sky .photo-col, .topic-card.sky .photo-col-dual { background: #e0f2fe; }
+    .topic-card.sky .photo-name { color: #0369a1; }
+
+    /* Mint fresh */
+    .topic-card.mint {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1px solid #bbf7d0;
+    }
+    .topic-card.mint .title-khmer { background: #dcfce7; border-left-color: #4ade80; color: #166534; }
+    .topic-card.mint .title-english { background: #f0fdf4; color: #15803d; }
+    .topic-card.mint .author-khmer { background: #dcfce7; color: #16a34a; }
+    .topic-card.mint .topic-number { background: #4ade80; color: white; }
+    .topic-card.mint .photo-col, .topic-card.mint .photo-col-dual { background: #dcfce7; }
+    .topic-card.mint .photo-name { color: #15803d; }
+
+    /* Peach coral */
+    .topic-card.peach {
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border: 1px solid #fed7aa;
+    }
+    .topic-card.peach .title-khmer { background: #ffedd5; border-left-color: #fb923c; color: #9a3412; }
+    .topic-card.peach .title-english { background: #fff7ed; color: #c2410c; }
+    .topic-card.peach .author-khmer { background: #ffedd5; color: #ea580c; }
+    .topic-card.peach .topic-number { background: #fb923c; color: white; }
+    .topic-card.peach .photo-col, .topic-card.peach .photo-col-dual { background: #ffedd5; }
+    .topic-card.peach .photo-name { color: #c2410c; }
+
+    /* Soft amber */
+    .topic-card.amber {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1px solid #fde68a;
+    }
+    .topic-card.amber .title-khmer { background: #fef3c7; border-left-color: #fbbf24; color: #854d0e; }
+    .topic-card.amber .title-english { background: #fffbeb; color: #a16207; }
+    .topic-card.amber .author-khmer { background: #fef3c7; color: #d97706; }
+    .topic-card.amber .topic-number { background: #fbbf24; color: white; }
+    .topic-card.amber .photo-col, .topic-card.amber .photo-col-dual { background: #fef3c7; }
+    .topic-card.amber .photo-name { color: #a16207; }
+
+    /* Powder blue */
+    .topic-card.powder {
+      background: linear-gradient(135deg, #f5faff 0%, #e6f0ff 100%);
+      border: 1px solid #c7daf5;
+    }
+    .topic-card.powder .title-khmer { background: #e6f0ff; border-left-color: #6b8cce; color: #2c4f7c; }
+    .topic-card.powder .title-english { background: #f5faff; color: #365f8a; }
+    .topic-card.powder .author-khmer { background: #e6f0ff; color: #3b6ea0; }
+    .topic-card.powder .topic-number { background: #6b8cce; color: white; }
+    .topic-card.powder .photo-col, .topic-card.powder .photo-col-dual { background: #e6f0ff; }
+    .topic-card.powder .photo-name { color: #365f8a; }
+
+    /* flex layout */
+    .topic-flex {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+
+    /* photo column - default single photo with name below */
+    .photo-col {
+      flex: 0 0 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem 0.8rem;
+      border-radius: 2rem 0 0 2rem;
+      gap: 0.6rem;
+    }
+
+    .topic-img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+    }
+
+    /* Hover enlarge effect */
+    .topic-img:hover {
+      transform: scale(1.15);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .photo-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      background: rgba(255,255,255,0.85);
+      padding: 4px 8px;
+      border-radius: 40px;
+      width: 100%;
+      max-width: 110px;
+    }
+
+    /* two photos up & down with names */
+    .photo-col-dual {
+      flex: 0 0 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1rem 0.8rem;
+      border-radius: 2rem 0 0 2rem;
+    }
+    .photo-col-dual .photo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .photo-col-dual .topic-img-dual {
+      width: 88px;
+      height: 88px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+    }
+    /* Hover enlarge effect for dual photos */
+    .photo-col-dual .topic-img-dual:hover {
+      transform: scale(1.15);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+    .photo-col-dual .photo-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-align: center;
+      background: rgba(255,255,255,0.85);
+      padding: 3px 6px;
+      border-radius: 40px;
+      width: auto;
+      min-width: 70px;
+    }
+
+    /* content column */
+    .content-col {
+      flex: 1;
+      padding: 1.2rem 1.5rem 1.2rem 1rem;
+    }
+
+    /* author & numbering */
+    .topic-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 0.6rem;
+      border-bottom: 2px dotted rgba(0,0,0,0.08);
+      padding-bottom: 0.5rem;
+    }
+
+    .topic-number {
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 40px;
+      letter-spacing: 0.5px;
+    }
+
+    .author-khmer {
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 2px 12px;
+      border-radius: 40px;
+    }
+
+    .author-latin {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #7a6852;
+      font-family: 'Khmer OS Siemreap', 'Inter', sans-serif;
+    }
+
+    /* bilingual titles */
+    .title-khmer {
+      font-size: 0.96rem;
+      font-weight: 600;
+      line-height: 1.48;
+      padding: 0.7rem 1rem;
+      border-radius: 1rem;
+      margin: 0.6rem 0 0.5rem 0;
+      border-left: 4px solid;
+      font-family: 'Khmer OS Siemreap', 'Khmer', 'Inter', sans-serif;
+    }
+
+    .title-english {
+      font-size: 0.86rem;
+      font-weight: 500;
+      line-height: 1.45;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.9rem;
+      font-family: 'Khmer OS Siemreap', 'Inter', sans-serif;
+    }
+
+    /* responsive */
+    @media (max-width: 750px) {
+      body {
+        padding: 1rem;
+      }
+      .photo-col, .photo-col-dual {
+        flex: 0 0 120px;
+        padding: 1rem 0.5rem;
+      }
+      .topic-img, .photo-col-dual .topic-img-dual {
+        width: 80px;
+        height: 80px;
+      }
+      .content-col {
+        padding: 1rem;
+      }
+      .author-khmer {
+        font-size: 0.95rem;
+      }
+      .title-khmer {
+        font-size: 0.85rem;
+      }
+      .photo-name {
+        font-size: 0.7rem;
+      }
+      .theme-title {
+        font-size: 1.3rem;
+      }
+      .conf-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .topic-flex {
+        flex-direction: column;
+      }
+      .photo-col, .photo-col-dual {
+        border-radius: 2rem 2rem 0 0;
+        padding: 1rem;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .photo-col-dual {
+        flex-direction: row;
+        gap: 1.2rem;
+      }
+      .topic-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      font-size: 0.9rem;
+      color: #3b82f6;
+      border-top: 1px solid #93c5fd;
+      font-weight: 500;
+      background: #eff6ff;
+      padding: 1rem;
+      border-radius: 2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="conf-header">
+    <h1>សិក្ខាសាលា ពុទ្ធិកសាកលវិទ្យាល័យព្រះសីហនុរាជ</h1>
+    <h2>១១ ប្រធានបទ (11 Topics)</h2>
+    <h2>Buddhism, Peace, and Society in Cambodia</h2>
+    <div class="date-badge">📅 ថ្ងៃទី ២០ មិថុនា ២០២៦ | June 20, 2026
+          <div class="">
+      <a href="5.html">More</a>
+    </div>
+    </div>
+
+  </div>
+
+  <!-- THEME I -->
+  <div class="theme-section">
+    <div class="theme-title">
+      🕊️ Theme I: Building Peace, Fostering Equality: Stories of Female Buddhist Practitioners
+      <span class="theme-title-en">(ស្ថាបនាសន្តិភាព ជំរុញសមភាព)</span>
+    </div>
+    <div class="chair">🎙️ Chaired by: Dr. Heike Löschmann</div>
+  </div>
+
+  <!-- Topic 1 - Lavender -->
+  <div class="topic-card lavender">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/1 Heng Kosorl.jpg" alt="Heng Kosorl" onerror="this.src='https://ui-avatars.com/api/?background=a78bfa&color=fff&rounded=true&size=100&name=Heng'">
+        <div class="photo-name">ហេង កុសល</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 01</span>
+          <span class="author-khmer">ហេង កុសល</span>
+          <span class="author-latin">Heng Kosorl</span>
+        </div>
+        <div class="title-khmer">ដូនជីក្នុងសង្គមនិងការកសាងសន្តិភាពផ្លូវចិត្តក្នុងសង្គមកម្ពុជាក្រោយសម័យជម្លោះ (ចាប់ពីឆ្នាំ ១៩៩៥)</div>
+        <div class="title-english">Nuns in Social Work and Cultivating Psychological Peace in Post-Conflict Cambodia (since 1995)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 2 - Rose -->
+  <div class="topic-card rose">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/2 Sak Bunchhoeun.jpg" alt="Sak Bunchhoeun" onerror="this.src='https://ui-avatars.com/api/?background=f472b6&color=fff&rounded=true&size=100&name=Sak'">
+        <div class="photo-name">សាក់ ប៊ុនឈឿន</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 02</span>
+          <span class="author-khmer">សាក់ ប៊ុនឈឿន</span>
+          <span class="author-latin">Sak Bunchhoeun</span>
+        </div>
+        <div class="title-khmer">តួនាទីរបស់ស្រ្តីនៅក្នុងពុទ្ធសាសនានិងសន្តិភាព៖ ករណីសិក្សាលើការដឹកនាំធម្មយាត្រាលោកស្រីឧត្តមវណ្ណ ស៊ីវន</div>
+        <div class="title-english">The role of woman in rebuilding Buddhism and promoting peace in Cambodia: Dhammacarini Udom Van Sivorn Case Study</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 3 - Sky Blue (two photos vertical with names) -->
+  <div class="topic-card sky">
+    <div class="topic-flex">
+      <div class="photo-col-dual">
+        <div class="photo-item">
+          <img class="topic-img-dual" src="./12SpeakersPhotos/3 kum Samaly.jpg" alt="Kum Somaly" onerror="this.src='https://ui-avatars.com/api/?background=38bdf8&color=fff&rounded=true&size=88&name=Somaly'">
+          <div class="photo-name">គុំ សុម៉ាលី</div>
+        </div>
+        <div class="photo-item">
+          <img class="topic-img-dual" src="./12SpeakersPhotos/3 Thoeun Sreynorng.jpg" alt="Thoeun Sreynorng" onerror="this.src='https://ui-avatars.com/api/?background=38bdf8&color=fff&rounded=true&size=88&name=Sreynorng'">
+          <div class="photo-name">ធឿន ស្រីណង</div>
+        </div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 03</span>
+          <span class="author-khmer">គុំ សុម៉ាលី &nbsp; ធឿន ស្រីណង</span>
+          <span class="author-latin">Kum Somaly & Thoeun Sreynorng</span>
+        </div>
+        <div class="title-khmer">សមភាពយេនឌ័រ ក្នុងព្រះពុទ្ធសាសនា៖ បញ្ហាប្រឈមចំពោះភិក្ខុនីក្នុងការកសាងសន្តិភាពនៅក្នុងពុទ្ធសាសនាខ្មែរ</div>
+        <div class="title-english">Gender Equality: Challenges for Female Monks in Peacebuilding within Cambodian Buddhism</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEME II -->
+  <div class="theme-section">
+    <div class="theme-title">
+      🎙️ Theme II: Voices of Peace: Life Experiences of Monks and Lay Buddhists
+      <span class="theme-title-en">(សំឡេងសន្តិភាព)</span>
+    </div>
+    <div class="chair">🎙️ Chaired by: Dr. Joana D. Sokhoeun</div>
+  </div>
+
+  <!-- Topic 4 - Mint -->
+  <div class="topic-card mint">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/4 Dalis LOEURM.JPG" alt="Dalis Loeurm" onerror="this.src='https://ui-avatars.com/api/?background=4ade80&color=fff&rounded=true&size=100&name=Dalis'">
+        <div class="photo-name">លឿម ដាលីស</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 04</span>
+          <span class="author-khmer">លឿម ដាលីស</span>
+          <span class="author-latin">Dalis Loeurm</span>
+        </div>
+        <div class="title-khmer">ព្រះអង្គ ខៀវ ជុំ និង គំនិតស្តីពីសន្តិភាពក្នុងកំឡុងទសវត្ស ឆ្នាំ ១៩៦០-១៩៧០</div>
+        <div class="title-english">Venerable Khieu Chum and his thought about peace during 1960s-1970s</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 5 - Peach -->
+  <div class="topic-card peach">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/5 MEAN RATANA.jpg" alt="Mean Ratana" onerror="this.src='https://ui-avatars.com/api/?background=fb923c&color=fff&rounded=true&size=100&name=Ratana'">
+        <div class="photo-name">មាន រតនា</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 05</span>
+          <span class="author-khmer">មាន រតនា</span>
+          <span class="author-latin">Mean Ratana</span>
+        </div>
+        <div class="title-khmer">ពុទ្ធសាសនា សន្តិភាព និងសង្គមនៅកម្ពុជា តាមរយៈស្នាដៃព្រះភិក្ខុ ប៉ាង ខាត់ ពីឆ្នាំ១៩៤៥-១៩៧១</div>
+        <div class="title-english">Buddhism, Peace, and Society in Cambodia through Venerable Pang Khat's Scholarship from 1945 to 1971</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 6 - Amber -->
+  <div class="topic-card amber">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/6 TIN Pov.jpg" alt="Tin Pov" onerror="this.src='https://ui-avatars.com/api/?background=fbbf24&color=fff&rounded=true&size=100&name=Tin'">
+        <div class="photo-name">ទិន ពៅ</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 06</span>
+          <span class="author-khmer">ទិន ពៅ</span>
+          <span class="author-latin">Tin Pov</span>
+        </div>
+        <div class="title-khmer">ពុទ្ធសាសនា និងការកសាងសន្តិភាពនៅកម្ពុជា: សម្តេចព្រះព្រហ្មរតនមុនី ពិន សែម</div>
+        <div class="title-english">Buddhism and peace building in Cambodia: Venerable Pin Sem</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 7 - Powder Blue -->
+  <div class="topic-card powder">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/7 MEN MAOSAMNANG.jpg" alt="Men Maosamnang" onerror="this.src='https://ui-avatars.com/api/?background=6b8cce&color=fff&rounded=true&size=100&name=Men'">
+        <div class="photo-name">មិន ម៉ៅសំណាង</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 07</span>
+          <span class="author-khmer">មិន ម៉ៅសំណាង</span>
+          <span class="author-latin">Men Maosamnang</span>
+        </div>
+        <div class="title-khmer">តួនាទីព្រះពុទ្ធសាសនា និងតន្ត្រីជួយស្តារសុខភាពផ្លូវចិត្តជនរងគ្រោះក្រោយសង្គ្រាម ៖ ករណីសិក្សាលើដំណើរជីវិតលោក ចាន់ ឌឿន នៅខេត្តកំពង់ធំ</div>
+        <div class="title-english">Buddhism and Music in the Mental Health Recovery of Post-War Victims: A Case Study of Mr. Chan Doeun in Kampong Thom Province</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEME III -->
+  <div class="theme-section">
+    <div class="theme-title">
+      🌱 Theme III: How Dhamma and Living Communities Intertwine
+      <span class="theme-title-en">(ធម៌ និងសហគមន៍រស់នៅ)</span>
+    </div>
+    <div class="chair">🎙️ Chaired by: Prof. Dr. Chhem Kieth Rethy</div>
+  </div>
+
+  <!-- Topic 8 - Lavender -->
+  <div class="topic-card lavender">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/8 Pon Sophors.jpg" alt="Pon Sophors" onerror="this.src='https://ui-avatars.com/api/?background=a78bfa&color=fff&rounded=true&size=100&name=Pon'">
+        <div class="photo-name">ផុន សុភ័ស</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 08</span>
+          <span class="author-khmer">ផុន សុភ័ស</span>
+          <span class="author-latin">Pon Sophors</span>
+        </div>
+        <div class="title-khmer">ចលនាពុទ្ធសាសនាផ្សាភ្ជាប់នឹងសង្គម លំហូរចូលស្រុកខ្មែរ</div>
+        <div class="title-english">Socially Engaged Buddhism in Cambodia</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 9 - Rose -->
+  <div class="topic-card rose">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/9 KUCH Sovanna.jpg" alt="Kuch Sovanna" onerror="this.src='https://ui-avatars.com/api/?background=f472b6&color=fff&rounded=true&size=100&name=Kuch'">
+        <div class="photo-name">គជ់ សុវណ្ណា</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 09</span>
+          <span class="author-khmer">គជ់ សុវណ្ណា</span>
+          <span class="author-latin">Kuch Sovanna</span>
+        </div>
+        <div class="title-khmer">ការកសាងសន្តិភាពវិជ្ជមាននៅកម្ពុជាតាមគន្លងសីល ៥ (១៩៩៣-បច្ចុប្បន្ន)</div>
+        <div class="title-english">Building Positive Peace in Cambodia through the Five Precepts (1993–Present)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 10 - Mint -->
+  <div class="topic-card mint">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/10 Phann Chandara.jpg" alt="Phann Chandara" onerror="this.src='https://ui-avatars.com/api/?background=4ade80&color=fff&rounded=true&size=100&name=Phann'">
+        <div class="photo-name">ផាន់ ចាន់ដារា</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 10</span>
+          <span class="author-khmer">ផាន់ ចាន់ដារា</span>
+          <span class="author-latin">Phann Chandara</span>
+        </div>
+        <div class="title-khmer">វត្តអារាម ការបំប្លែង និងការផ្សះផ្សាផ្លូវចិត្ត: ករណីសិក្សា អំពីវត្តភ្នំឆ្មា និងការកសាងទំនាក់ទំនងសហគមន៍ក្រោយរបបខ្មែរក្រហម ស្ថិតនៅឃុំម្រោម ស្រុកអង្គជ័យ ខេត្តកំពត</div>
+        <div class="title-english">Monastery, Transformation, and Psychological Reconciliation: A Case Study of Wat Phnom Chhmar and the Reconstruction of Community Relations in the Post-Khmer Rouge Era, Located in Mroum Commune, Angkor Chey District, Kampot Province</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 11 - Sky Blue -->
+  <div class="topic-card sky">
+    <div class="topic-flex">
+      <div class="photo-col">
+        <img class="topic-img" src="./12SpeakersPhotos/11 OENG Sometri.jpg" alt="Oeng Sometri" onerror="this.src='https://ui-avatars.com/api/?background=38bdf8&color=fff&rounded=true&size=100&name=Oeng'">
+        <div class="photo-name">អ៊ឹង សុមេត្រី</div>
+      </div>
+      <div class="content-col">
+        <div class="topic-meta">
+          <span class="topic-number">Topic 11</span>
+          <span class="author-khmer">អ៊ឹង សុមេត្រី</span>
+          <span class="author-latin">Oeng Sometri</span>
+        </div>
+        <div class="title-khmer">តួនាទីរបស់ព្រះសង្ឃក្នុងការព្យាបាលផ្លូវចិត្តអតីតជនភៀសខ្លួន៖ ករណីសិក្សានៅវត្តប្រាសាទ ស្រះកណ្ដាល (វត្តខ្ចាស់) ខេត្តបន្ទាយមានជ័យ (១៩៧៩-១៩៩៥)</div>
+        <div class="title-english">Buddhist Monks' Role in Mental Healing Among Former Refugees: at Prasat Srah Kandal (Kchas), Banteay Mean Chey Province (1979-1995)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    🌟 គម្រោងស្រាវជ្រាវពុទ្ធសាសនា សង្គម និងសន្តិភាព នៅកម្ពុជា ពសស-GIZ 🌟
+  </div>
+</div>
+</body>
+</html>
